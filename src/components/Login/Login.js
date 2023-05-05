@@ -11,11 +11,23 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  // DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect. and to run form validation once
+
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
+    const identifier = setTimeout(() => {
+      console.log('checking form validity');
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+    // clean up function to also reset timer once ran
+    return () => {
+      clearTimeout(identifier);
+      console.log('cleanup');
+    };
+
   }, [enteredEmail, enteredPassword]);
+
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
