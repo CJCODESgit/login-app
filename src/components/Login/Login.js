@@ -4,7 +4,9 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
-const emailReducer = () => { };
+const emailReducer = () => {
+  return { value: '', isValid: false }
+};
 
 const Login = (props) => {
   const [enteredEmail, setEnteredEmail] = useState('');
@@ -13,28 +15,35 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  const [emailState, dispatchEmail] = useReducer(emailReducer);
+  const [emailState, dispatchEmail] = useReducer(emailReducer, {
+    value: '',
+    isValid: false
+  });
 
-  // DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect. and to run form validation once
+  //   DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect. and to run form validation once
 
-  useEffect(() => {
-    const identifier = setTimeout(() => {
-      console.log('checking form validity');
-      setFormIsValid(
-        enteredEmail.includes('@') && enteredPassword.trim().length > 6
-      );
-    }, 500);
-    // clean up function to also reset timer once ran
-    return () => {
-      clearTimeout(identifier);
-      console.log('cleanup');
-    };
+  //   useEffect(() => {
+  //     const identifier = setTimeout(() => {
+  //       console.log('checking form validity');
+  //       setFormIsValid(
+  //         enteredEmail.includes('@') && enteredPassword.trim().length > 6
+  //       );
+  //     }, 500);
+  //     // clean up function to also reset timer once ran
+  //     return () => {
+  //       clearTimeout(identifier);
+  //       console.log('cleanup');
+  //     };
 
-  }, [enteredEmail, enteredPassword]);
+  // }, [enteredEmail, enteredPassword]);
 
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
+
+    setFormIsValid(
+      emailState.isValid && enteredPassword.trim().length > 6
+    );
   };
 
   const passwordChangeHandler = (event) => {
@@ -42,7 +51,7 @@ const Login = (props) => {
   };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    setEmailIsValid(emailState.isValid);
   };
 
   const validatePasswordHandler = () => {
@@ -51,14 +60,14 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(enteredEmail, enteredPassword);
+    props.onLogin(emailState.value, enteredPassword);
   };
 
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <div
-          className={`${classes.control} ${emailIsValid === false ? classes.invalid : ''
+          className={`${classes.control} ${emailState.isValid === false ? classes.invalid : ''
             }`}
         >
           <label htmlFor="email">E-Mail</label>
