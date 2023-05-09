@@ -36,6 +36,11 @@ const Login = (props) => {
     isValid: null
   });
 
+  const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
+    value: '',
+    isValid: null
+  });
+
   //   DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect. and to run form validation once
 
   //   useEffect(() => {
