@@ -4,9 +4,12 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
-const emailReducer = () => {
+const emailReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {
     return { value: action.val, isValid: action.val.includes('@') };
+  }
+  if (action.type === 'INPUT_BLUR') {
+    return { value: state.value, isValid: action.val.includes('@') };
   }
   return { value: '', isValid: false }
 };
@@ -20,7 +23,7 @@ const Login = (props) => {
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: '',
-    isValid: false
+    isValid: null
   });
 
   //   DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect. and to run form validation once
@@ -55,7 +58,8 @@ const Login = (props) => {
   };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(emailState.isValid);
+    dispatchEmail({ type: 'INPUT_BLUR' })
+    // setEmailIsValid(emailState.isValid);
   };
 
   const validatePasswordHandler = () => {
