@@ -9,7 +9,7 @@ const emailReducer = (state, action) => {
     return { value: action.val, isValid: action.val.includes('@') };
   }
   if (action.type === 'INPUT_BLUR') {
-    return { value: state.value, isValid: action.val.includes('@') };
+    return { value: state.value, isValid: state.value.includes('@') };
   }
   return { value: '', isValid: false }
 };
@@ -19,10 +19,11 @@ const passwordReducer = (state, action) => {
     return { value: action.val, isValid: action.val.trim().length > 6 };
   }
   if (action.type === 'INPUT_BLUR') {
-    return { value: state.value, isValid: action.val.trim().length > 6 };
+    return { value: state.value, isValid: state.value.trim().length > 6 };
   }
-  return { value: '', isValid: false }
+  return { value: '', isValid: false };
 };
+
 
 const Login = (props) => {
   // const [enteredEmail, setEnteredEmail] = useState('');
@@ -33,12 +34,12 @@ const Login = (props) => {
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: '',
-    isValid: null
+    isValid: null,
   });
 
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
     value: '',
-    isValid: null
+    isValid: null,
   });
 
   //   DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect. and to run form validation once
