@@ -42,22 +42,22 @@ const Login = (props) => {
     isValid: null,
   });
 
-  //   DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect. and to run form validation once
+  // DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect.and to run form validation once
 
-  //   useEffect(() => {
-  //     const identifier = setTimeout(() => {
-  //       console.log('checking form validity');
-  //       setFormIsValid(
-  //         enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //       );
-  //     }, 500);
-  //     // clean up function to also reset timer once ran
-  //     return () => {
-  //       clearTimeout(identifier);
-  //       console.log('cleanup');
-  //     };
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log('checking form validity');
+      setFormIsValid(
+        emailState.isValid && passwordState.isValid
+      );
+    }, 500);
+    // clean up function to also reset timer once ran
+    return () => {
+      clearTimeout(identifier);
+      console.log('cleanup');
+    };
 
-  // }, [enteredEmail, enteredPassword]);
+  }, [emailState, passwordState]);
 
 
   const emailChangeHandler = (event) => {
