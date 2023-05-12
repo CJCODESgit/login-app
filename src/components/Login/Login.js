@@ -42,13 +42,19 @@ const Login = (props) => {
     isValid: null,
   });
 
+
+
+  //object destructuring which will help the validity to only run effect when value has been verified for example if another value is added to the password and password is already past 6 characters it won't rerun the useEffect
+  const { isValid: emailIsValid } = emailState;
+  const { isValid: passwordIsValid } = passwordState;
+
   // DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect.and to run form validation once
 
   useEffect(() => {
     const identifier = setTimeout(() => {
       console.log('checking form validity');
       setFormIsValid(
-        emailState.isValid && passwordState.isValid
+        emailIsValid && passwordIsValid
       );
     }, 500);
     // clean up function to also reset timer once ran
@@ -57,7 +63,7 @@ const Login = (props) => {
       console.log('cleanup');
     };
 
-  }, [emailState, passwordState]);
+  }, [emailIsValid, passwordIsValid]);
 
 
   const emailChangeHandler = (event) => {
