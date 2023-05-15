@@ -16,12 +16,12 @@ const Navigation = (props) => {
                   <a href="/">Users</a>
                 </li>
               )}
-              {ctx.isLoggedIn && (
+              {props.isLoggedIn && (
                 <li>
                   <a href="/">Admin</a>
                 </li>
               )}
-              {ctx.isLoggedIn && (
+              {props.isLoggedIn && (
                 <li>
                   <button onClick={props.onLogout}>Logout</button>
                 </li>
