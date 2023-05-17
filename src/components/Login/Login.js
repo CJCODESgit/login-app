@@ -105,9 +105,9 @@ const Login = () => {
     if (formIsValid) {
       ctx.onLogin(emailState.value, passwordState.value);
     } else if (!emailIsValid) {
-      emailInputRef.current.activate();
+      emailInputRef.current.focus();
     } else {
-      passwordInputRef.current.activate();
+      passwordInputRef.current.focus();
     }
   };
 
