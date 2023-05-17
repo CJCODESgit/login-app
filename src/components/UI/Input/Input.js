@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 import classes from './Input.module.css';
 
 const Input = (props) => {
     const inputRef = useRef();
+
 
 
     return (
