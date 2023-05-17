@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useContext } from 'react';
+import React, { useState, useEffect, useReducer, useContext, useRef } from 'react';
 import Input from '../UI/Input/Input';
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -50,6 +50,9 @@ const Login = () => {
   //object destructuring which will help the validity to only run effect when value has been verified for example if another value is added to the password and password is already past 6 characters it won't rerun the useEffect
   const { isValid: emailIsValid } = emailState;
   const { isValid: passwordIsValid } = passwordState;
+
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   // DEBOUNCING to validate input after some seconds instead of every keystroke using UseEffect.and to run form validation once
 
@@ -112,6 +115,7 @@ const Login = () => {
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
         <Input
+          ref={emailInputRef}
           id="email"
           label="email"
           type="email"
@@ -121,6 +125,7 @@ const Login = () => {
           onBlur={validateEmailHandler}
         />
         <Input
+          ref={passwordInputRef}
           id="password"
           label="password"
           type="password"
